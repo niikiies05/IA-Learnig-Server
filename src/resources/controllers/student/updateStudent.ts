@@ -4,14 +4,18 @@ import StudentService from '@/resources/services/student/student.service';
 
 const studentService = new StudentService();
 
-export const getStudent = async (
+export const updateStudent = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<Response | void> => {
     try {
         const studentId = req.params.id;
-        const student = await studentService.getStudent(studentId);
+        const studentData = req.body;
+        const student = await studentService.updateStudent(
+            studentId,
+            studentData
+        );
         if (student) {
             res.status(200).json({ data: student });
         } else {

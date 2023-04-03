@@ -41,7 +41,7 @@
     // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
 
     /* Module Resolution Options */
-    // "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+//     "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
     "baseUrl": "./src",                       /* Base directory to resolve non-absolute module names. */
     "paths": {
       "@/resources/*" : ["resources/*"],
@@ -69,5 +69,8 @@
     /* Advanced Options */
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
-  }
+  },
+//  "include": ["app.ts"],
+//  "exclude": ["node_modules"],
+//  "typeRoots": ["./node_modules/@types"]
 }

@@ -4,19 +4,15 @@ import StudentService from '@/resources/services/student/student.service';
 
 const studentService = new StudentService();
 
-export const getStudent = async (
+export const getStudentsByCohort = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<Response | void> => {
     try {
-        const studentId = req.params.id;
-        const student = await studentService.getStudent(studentId);
-        if (student) {
-            res.status(200).json({ data: student });
-        } else {
-            next(new HttpException(404, 'Student not found'));
-        }
+        const cohortId = req.params.cohortId;
+        const students = await studentService.getStudentsByCohort(cohortId);
+        res.status(200).json({ data: students });
     } catch (error: any) {
         next(new HttpException(400, error.message));
     }

@@ -30,7 +30,7 @@ class UserService {
     }
 
     /**
-     * Attempt to login a user
+     * Attempt to log in a user
      */
     public async login(
         email: string,

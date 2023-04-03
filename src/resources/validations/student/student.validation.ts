@@ -1,31 +1,25 @@
 import Joi from 'joi';
-import JoiObjectId from 'joi-oid';
 
 const create = Joi.object({
+    matricule: Joi.string().required(),
     name: Joi.string().max(30).required(),
-
     surname: Joi.string().required(),
-
+    phone: Joi.string().required(),
     email: Joi.string().email().required(),
-
     password: Joi.string().min(6).required(),
-
-    birthdate: Joi.date().required(),
-
-    phone: Joi.string().pattern(/^\+?[\d\s\-().]+$/).optional(),
-
-    interests: Joi.array().items(Joi.string()),
-
-    navigationHistory: Joi.array().items(Joi.any()),
-
-    cohorts: Joi.array().items(Joi.object()),
-
+    birthDate: Joi.date().required(),
+    interests: Joi.array().items(Joi.string()).optional(),
 });
 
 const update = Joi.object({
-    email: Joi.string().required(),
-
-    password: Joi.string().required(),
+    matricule: Joi.string().required(),
+    name: Joi.string().max(30).required(),
+    surname: Joi.string().required(),
+    phone: Joi.string().optional(),
+    email: Joi.string().email().optional(),
+    password: Joi.string().min(6).optional(),
+    birthDate: Joi.date().optional(),
+    interests: Joi.array().items(Joi.string()).optional(),
 });
 
 export default { create, update };

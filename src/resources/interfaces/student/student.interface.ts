@@ -1,9 +1,10 @@
 import { Document } from 'mongoose';
-import {ICohort} from "@/resources/interfaces/cohort/cohort.interface";
+import { ICohort } from '@/resources/interfaces/cohort/cohort.interface';
 
 // Étudiant
 export default interface IStudent extends Document {
     name: string;
+    matricule: string;
     surname: string;
     phone: string;
     email: string;

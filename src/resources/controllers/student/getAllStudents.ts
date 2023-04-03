@@ -4,19 +4,14 @@ import StudentService from '@/resources/services/student/student.service';
 
 const studentService = new StudentService();
 
-export const getStudent = async (
+export const getAllStudents = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<Response | void> => {
     try {
-        const studentId = req.params.id;
-        const student = await studentService.getStudent(studentId);
-        if (student) {
-            res.status(200).json({ data: student });
-        } else {
-            next(new HttpException(404, 'Student not found'));
-        }
+        const students = await studentService.getAllStudents();
+        res.status(200).json({ students });
     } catch (error: any) {
         next(new HttpException(400, error.message));
     }

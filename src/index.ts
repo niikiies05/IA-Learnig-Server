@@ -2,14 +2,12 @@ import 'dotenv/config';
 import 'module-alias/register';
 import validateEnv from '@/utils/validateEnv';
 import App from './app';
-import PostController from '@/resources/post/post.controller';
-import UserController from '@/resources/controllers/user/user.controller';
+import { initRoutes } from '@/resources/routes/routes';
 
 validateEnv();
 
-const app = new App(
-    [new PostController(), new UserController()],
-    Number(process.env.PORT)
-);
+const app = new App(Number(process.env.PORT));
+
+initRoutes(app);
 
 app.listen();

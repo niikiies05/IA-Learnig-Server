@@ -1,19 +1,19 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
-import IStudent from "@/resources/interfaces/student/student.interface";
+import IStudent from '@/resources/interfaces/student/student.interface';
 
 const studentSchema = new Schema<IStudent>({
     name: { type: String, required: true },
+    matricule: { type: String, required: true },
     surname: { type: String, required: true },
     phone: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    birthDate: { type: Date, required: true},
+    birthDate: { type: Date, required: true },
     interests: { type: [String], default: [] },
     navigationHistory: { type: [Object], default: [] },
     cohorts: [{ type: Schema.Types.ObjectId, ref: 'Cohort' }],
 });
-
 
 studentSchema.pre<IStudent>('save', async function (next) {
     if (!this.isModified('password')) {

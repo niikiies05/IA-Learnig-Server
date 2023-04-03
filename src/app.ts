@@ -7,17 +7,18 @@ import Controller from '@/utils/interfaces/controller.interface';
 import ErrorMiddleware from '@/middleware/error.middleware';
 import helmet from 'helmet';
 
+mongoose.set('strictQuery', false); // Ou utilisez `true` pour conserver le comportement actuel.
+
 class App {
     public express: Application;
     public port: number;
 
-    constructor(controllers: Controller[], port: number) {
+    constructor(port: number) {
         this.express = express();
         this.port = port;
 
         this.initialiseDatabaseConnection();
         this.initialiseMiddleware();
-        this.initialiseControllers(controllers);
         this.initialiseErrorHandling();
     }
 
@@ -30,7 +31,7 @@ class App {
         this.express.use(compression());
     }
 
-    private initialiseControllers(controllers: Controller[]): void {
+    public initialiseControllers(controllers: Controller[]): void {
         controllers.forEach((controller: Controller) => {
             this.express.use('/api', controller.router);
         });
@@ -40,12 +41,26 @@ class App {
         this.express.use(ErrorMiddleware);
     }
 
-    private initialiseDatabaseConnection(): void {
+    private async connectToDatabase(): Promise<void> {
         const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
+        const mongoDBConnectionString = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
 
-        mongoose.connect(
-            `mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`
-        );
+        // Options de connexion à la base de données MongoDB.
+        // Const mongoDBOptions: ConnectOptions = {
+        //     // useNewUrlParser: true,
+        //     // useUnifiedTopology: true,
+        // };
+
+        try {
+            await mongoose.connect(mongoDBConnectionString);
+            console.log('Connected to MongoDB...');
+        } catch (err) {
+            console.error('Could not connect to MongoDB...', err);
+        }
+    }
+
+    private initialiseDatabaseConnection(): void {
+        this.connectToDatabase();
     }
 
     public listen(): void {

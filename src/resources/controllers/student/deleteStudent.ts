@@ -4,16 +4,16 @@ import StudentService from '@/resources/services/student/student.service';
 
 const studentService = new StudentService();
 
-export const getStudent = async (
+export const deleteStudent = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<Response | void> => {
     try {
         const studentId = req.params.id;
-        const student = await studentService.getStudent(studentId);
+        const student = await studentService.deleteStudent(studentId);
         if (student) {
-            res.status(200).json({ data: student });
+            res.status(200).json({ message: 'Student delete successfully' });
         } else {
             next(new HttpException(404, 'Student not found'));
         }
