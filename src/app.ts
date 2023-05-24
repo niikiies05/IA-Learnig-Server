@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import Controller from '@/utils/interfaces/controller.interface';
 import ErrorMiddleware from '@/middleware/error.middleware';
 import helmet from 'helmet';
+import { navigationHistoryMiddleware } from '@/middleware/navigationHistory.middleware';
 
 mongoose.set('strictQuery', false); // Ou utilisez `true` pour conserver le comportement actuel.
 
@@ -29,6 +30,7 @@ class App {
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: false }));
         this.express.use(compression());
+        this.express.use(navigationHistoryMiddleware);
     }
 
     public initialiseControllers(controllers: Controller[]): void {
@@ -41,15 +43,10 @@ class App {
         this.express.use(ErrorMiddleware);
     }
 
-    private async connectToDatabase(): Promise<void> {
+    public async connectToDatabase(uri?: string): Promise<void> {
         const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
-        const mongoDBConnectionString = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
-
-        // Options de connexion à la base de données MongoDB.
-        // Const mongoDBOptions: ConnectOptions = {
-        //     // useNewUrlParser: true,
-        //     // useUnifiedTopology: true,
-        // };
+        const mongoDBConnectionString =
+            uri || `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`;
 
         try {
             await mongoose.connect(mongoDBConnectionString);
@@ -61,6 +58,10 @@ class App {
 
     private initialiseDatabaseConnection(): void {
         this.connectToDatabase();
+    }
+
+    public async closeDatabase(): Promise<void> {
+        await mongoose.connection.close();
     }
 
     public listen(): void {

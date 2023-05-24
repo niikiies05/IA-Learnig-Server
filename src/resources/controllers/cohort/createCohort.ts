@@ -10,8 +10,13 @@ export const createCohort = async (
     next: NextFunction
 ): Promise<Response | void> => {
     try {
-        const { name, year } = req.body;
-        const cohort = await cohortService.create(name, year);
+        const { name, year, startDate, endDate } = req.body;
+        const cohort = await cohortService.create(
+            name,
+            year,
+            startDate,
+            endDate
+        );
         res.status(200).json({ data: cohort });
     } catch (error: any) {
         next(new HttpException(400, error.message));

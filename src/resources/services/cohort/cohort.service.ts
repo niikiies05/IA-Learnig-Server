@@ -4,8 +4,13 @@ import { ICohort } from '@/resources/interfaces/cohort/cohort.interface';
 class CohortService {
     private cohort = CohortModel;
 
-    public async create(name: string, year: number): Promise<ICohort> {
-        const newCohort = new this.cohort({ name, year });
+    public async create(
+        name: string,
+        year: number,
+        startDate: Date,
+        endDate: Date
+    ): Promise<ICohort> {
+        const newCohort = new this.cohort({ name, year, startDate, endDate });
         return await newCohort.save();
     }
 
