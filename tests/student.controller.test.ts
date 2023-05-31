@@ -2,7 +2,7 @@ import request from 'supertest';
 import App from '../src/app';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import StudentService from '@/resources/services/student/student.service';
-import { initRoutes } from '@/resources/routes/routes';
+import { initRoutes } from '../src/routes/routes';
 
 jest.mock('@/resources/services/student/student.service');
 
@@ -102,6 +102,4 @@ describe('StudentController', () => {
         expect(response.status).toBe(200);
         expect(response.body).toMatchObject(mockStudent);
     });
-
-    // Ajoutez d'autres tests pour les autres routes du contrôleur étudiant
 });

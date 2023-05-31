@@ -2,7 +2,7 @@ import 'dotenv/config';
 import 'module-alias/register';
 import validateEnv from '@/utils/validateEnv';
 import App from './app';
-import { initRoutes } from '@/resources/routes/routes';
+import { initRoutes } from './routes/routes';
 
 validateEnv();
 

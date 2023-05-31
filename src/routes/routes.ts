@@ -1,4 +1,4 @@
-import App from '../../app';
+import App from '../app';
 import UserController from '@/resources/controllers/user/user.controller';
 import StudentController from '@/resources/controllers/student/student.controller';
 import CohortController from '@/resources/controllers/cohort/cohort.controller';

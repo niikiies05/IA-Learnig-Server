@@ -110,6 +110,4 @@ describe('StudentService', () => {
         expect(students).toEqual(mockStudents);
         expect(StudentModel.find).toHaveBeenCalledTimes(1);
     });
-
-    // Ajoutez d'autres tests pour les autres méthodes du service étudiant
 });
